@@ -1,0 +1,10 @@
+USE MASTER 
+GO
+IF EXISTS(SELECT name FROM SYSDATABASES WHERE name = 'BancoTcc')
+	DROP DATABASE BancoTcc
+go
+CREATE DATABASE BancoTcc
+go
+
+USE BancoTcc
+go
