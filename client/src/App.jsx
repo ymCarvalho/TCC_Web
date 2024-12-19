@@ -1,8 +1,33 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
+import Axios from "axios";
 
 function App() {
-  const handleClickRegister = (values) => console.log(values);
+  const handleClickRegister = (values) => {
+    Axios.post("http://localhost:3001/register", {
+      email: values.email,
+      password: values.password,
+    })
+      .then((response) => {
+        console.log("usuario registrado com sucesso", response.data);
+      })
+      .catch((error) => {
+        console.error("Erro ao registrar:", error.response?.data || error);
+      });
+  };
+  const handleClickLogin = (values) => {
+    Axios.post("http://localhost:3001/login", {
+      email: values.email,
+      password: values.password,
+    })
+      .then((response) => {
+        console.log("usuario logado com sucesso", response.data);
+      })
+      .catch((error) => {
+        console.error("Erro ao logar:", error.response?.data || error);
+      });
+  };
+
   const validadionRegister = yup.object().shape({
     email: yup.string().email().required("Email obrigatório"),
     password: yup
@@ -13,7 +38,7 @@ function App() {
       .string()
       .oneOf([yup.ref("password"), null], "As senhas devem ser iguais"),
   });
-  const handleClickLogin = (values) => console.log(values);
+
   const validadioLogin = yup.object().shape({
     email: yup.string().email().required("Email obrigatório"),
     password: yup
@@ -32,11 +57,11 @@ function App() {
       >
         <Form className="login-form">
           <div className="login-form-group">
-            <Field name="email" className="field" placeHolder="Email" />
+            <Field name="email" className="field" placeholder="Email" />
             <ErrorMessage component="span" name="email" className="error" />
           </div>
           <div className="password-form-group">
-            <Field name="password" className="field" placeHolder="Senha" />
+            <Field name="password" className="field" placeholder="Senha" />
             <ErrorMessage component="span" name="password" className="error" />
           </div>
           <button className="button" type="submit">
@@ -53,18 +78,18 @@ function App() {
       >
         <Form className="login-form">
           <div className="login-form-group">
-            <Field name="email" className="field" placeHolder="Email" />
+            <Field name="email" className="field" placeholder="Email" />
             <ErrorMessage component="span" name="email" className="error" />
           </div>
           <div className="password-form-group">
-            <Field name="password" className="field" placeHolder="Senha" />
+            <Field name="password" className="field" placeholder="Senha" />
             <ErrorMessage component="span" name="password" className="error" />
           </div>
           <div className="password-form-group">
             <Field
               name="confirmPassword"
               className="field"
-              placeHolder="Confirmar senha"
+              placeholder="Confirmar senha"
             />
             <ErrorMessage
               component="span"
